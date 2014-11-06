@@ -1,3 +1,8 @@
+zvelo-docker-discover
+=====================
+
+[![wercker status](https://app.wercker.com/status/aa73805ce183bd02292d4ef310981747/s "wercker status")](https://app.wercker.com/project/bykey/aa73805ce183bd02292d4ef310981747)
+
 docker-discover is a service discovery container that leverages haproxy and etcd.  When running,
 it sets up listeners for remote docker containers discovered via etcd.  It works in tandem with
 docker-register.
