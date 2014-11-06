@@ -7,12 +7,12 @@ EnvironmentFile=/etc/environment
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill %p-%i
 ExecStartPre=-/usr/bin/docker rm %p-%i
-ExecStartPre=/bin/bash -c "DOCKER_REGISTRY_HOST=$(/bin/etcdctl get /config/shared/docker/RegistryHost); \
-    DOCKER_IMAGE_NAME=$(/bin/etcdctl get /config/system/docker/service/zvelo-docker-discover/ImageName); \
+ExecStartPre=/bin/bash -c "DOCKER_REGISTRY_HOST=$(/bin/etcdctl get /zvelo/config/shared/docker/RegistryHost); \
+    DOCKER_IMAGE_NAME=$(/bin/etcdctl get /zvelo/config/system/docker/service/zvelo-docker-discover/ImageName); \
     exec /usr/bin/docker pull $DOCKER_REGISTRY_HOST''$DOCKER_IMAGE_NAME"
 
-ExecStart=/bin/bash -c "DOCKER_REGISTRY_HOST=$(/bin/etcdctl get /config/shared/docker/RegistryHost); \
-    DOCKER_IMAGE_NAME=$(/bin/etcdctl get /config/system/docker/service/zvelo-docker-discover/ImageName); \
+ExecStart=/bin/bash -c "DOCKER_REGISTRY_HOST=$(/bin/etcdctl get /zvelo/config/shared/docker/RegistryHost); \
+    DOCKER_IMAGE_NAME=$(/bin/etcdctl get /zvelo/config/system/docker/service/zvelo-docker-discover/ImageName); \
     exec /usr/bin/docker run --net host --name=%p-%i \
     -e ETCD_HOST=$COREOS_PUBLIC_IPV4:4001 \
     -p 127.0.0.1:1936:1936
