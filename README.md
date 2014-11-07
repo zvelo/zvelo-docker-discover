@@ -4,11 +4,11 @@ zvelo-docker-discover
 [![wercker status](https://app.wercker.com/status/aa73805ce183bd02292d4ef310981747/s "wercker status")](https://app.wercker.com/project/bykey/aa73805ce183bd02292d4ef310981747)
 
 ### Build Image
-docker build -t zvelo/zvelo-docker-discover .
+    $ docker build -t zvelo/zvelo-docker-discover .
 
 ### Run Service
-fleetctl submit zvelo-docker-discover@.service
-fleetctl start zvelo-docker-discover@{1..1}.service
+    $ fleetctl submit zvelo-docker-discover@.service
+    $ fleetctl start zvelo-docker-discover@{1..1}.service
 
 ### Original README
 docker-discover is a service discovery container that leverages haproxy and etcd.  When running,
