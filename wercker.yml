@@ -1,1 +1,32 @@
-box: wercker/default
+box: wercker-labs/docker
+
+# Build definition
+build:
+    steps:
+        # Build the project
+        - script:
+            name: docker build
+            code: |
+                echo "Building docker image $DOCKER_IMAGE"
+                docker build -t $DOCKER_IMAGE .
+        - zvelo/docker-save:
+            image: $DOCKER_IMAGE
+
+    after-steps:
+        - hipchat-notify:
+            token: $HIPCHAT_TOKEN
+            room-id: $HIPCHAT_ROOM_ID
+
+deploy:
+    steps:
+        # Push the image to the hub
+        - zvelo/docker-hub-push:
+            image: $DOCKER_IMAGE    
+            username: $DOCKER_USERNAME
+            password: $DOCKER_PASSWORD
+            email: $DOCKER_EMAIL
+
+    after-steps:
+        - hipchat-notify:
+            token: $HIPCHAT_TOKEN
+            room-id: $HIPCHAT_ROOM_ID
