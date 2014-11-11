@@ -7,13 +7,10 @@ build:
         - script:
             name: docker build
             code: |
-                docker build -t zvelo/zvelo-docker-discover .
-
-        # Save docker image
-        - script:
-            name: docker save
-            code: |
-                docker save zvelo/zvelo-docker-discover > ${WERCKER_OUTPUT_DIR}/zvelo-docker-discover.tar
+                echo "Building docker image $DOCKER_IMAGE"
+                docker build -t $DOCKER_IMAGE .
+        - zvelo/docker-save:
+            image: $DOCKER_IMAGE
 
     after-steps:
         - hipchat-notify:
@@ -21,16 +18,15 @@ build:
             room-id: $HIPCHAT_ROOM_ID
 
 deploy:
-  steps:
-      # Push the image to the hub
-      - zvelo/docker-hub-push:
-            image: zvelo/zvelo-docker-discover
-            tarfile: zvelo-docker-discover.tar
+    steps:
+        # Push the image to the hub
+        - zvelo/docker-hub-push:
+            image: $DOCKER_IMAGE    
             username: $DOCKER_USERNAME
             password: $DOCKER_PASSWORD
             email: $DOCKER_EMAIL
 
-  after-steps:
-    - hipchat-notify:
-        token: $HIPCHAT_TOKEN
-        room-id: $HIPCHAT_ROOM_ID
+    after-steps:
+        - hipchat-notify:
+            token: $HIPCHAT_TOKEN
+            room-id: $HIPCHAT_ROOM_ID
