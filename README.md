@@ -1,4 +1,4 @@
-docker-discover is a service discovery container that leverages haproxy and etcd.  When running,
+docker-discover is a service discovery container that leverages haproxy and etcd. When running,
 it sets up listeners for remote docker containers discovered via etcd.  It works in tandem with
 docker-register.
 
