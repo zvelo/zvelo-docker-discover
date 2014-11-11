@@ -15,7 +15,7 @@ ExecStart=/bin/bash -c "DOCKER_REGISTRY_HOST=$(/bin/etcdctl get /zvelo/config/sh
     DOCKER_IMAGE_NAME=$(/bin/etcdctl get /zvelo/config/system/docker/service/zvelo-docker-discover/ImageName); \
     exec /usr/bin/docker run --net host --name=%p-%i \
     -e ETCD_HOST=$COREOS_PUBLIC_IPV4:4001 \
-    -p 127.0.0.1:1936:1936 \
+    -p $(/bin/etcdctl get /zvelo/config/system/docker/service/zvelo-docker-discover/PortA1):$(/bin/etcdctl get /zvelo/config/system/docker/service/zvelo-docker-discover/PortA2) \
     -t $DOCKER_REGISTRY_HOST''$DOCKER_IMAGE_NAME "
 ExecStartPost=/usr/bin/etcdctl set /domains/%p/%H:%i running
 ExecStop=/usr/bin/docker stop %p-%i
